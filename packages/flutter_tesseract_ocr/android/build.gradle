@@ -1,0 +1,24 @@
+group 'io.paratoner.flutter_tesseract_ocr'
+version '1.0-local'
+
+apply plugin: 'com.android.library'
+
+repositories {
+    maven {
+        url = uri("$projectDir/maven-repo")
+    }
+}
+
+android {
+    namespace 'io.paratoner.flutter_tesseract_ocr'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 21
+    }
+}
+
+dependencies {
+    implementation 'local.tager2:tesseract4android:4.0.0-local'
+    implementation 'androidx.annotation:annotation:1.9.1'
+}

@@ -1,0 +1,21 @@
+name: flutter_tesseract_ocr
+description: Local Tesseract OCR bridge for Android and Web, vendored for Tager 2.
+version: 0.4.31+local
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.13.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  path_provider: ^2.1.4
+  path: ^1.9.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.paratoner.flutter_tesseract_ocr
+        pluginClass: FlutterTesseractOcrPlugin
