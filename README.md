@@ -40,6 +40,7 @@ flutter build apk --debug
 قبل بناء Release، وفّر المتغيرات `TAGER2_KEYSTORE_PATH` و`TAGER2_KEY_ALIAS` و`TAGER2_STORE_PASSWORD` و`TAGER2_KEY_PASSWORD` في بيئة البناء. يرفض Gradle بناء Release عند غيابها، ولا يستخدم مفتاح debug كتوقيع إصدار.
 
 ## الوثائق
+- [فهرس الكود الرئيسي](CODE_INDEX.md) — خريطة المشروع وروابط الفهارس المحلية لكل وحدة.
 
 - [معمارية المشروع](ARCHITECTURE.md)
 - [خارطة الطريق](ROADMAP.md)
