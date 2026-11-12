@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'tager2-local-v2';
+const CACHE_NAME = 'tager2-local-v3';
 const CACHE_PREFIX = 'tager2-local-';
 
 self.addEventListener('install', (event) => {
