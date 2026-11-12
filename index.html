@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -12,7 +12,7 @@
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
     This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
+    the `--base-href` argument provided by `flutter build`.
   -->
   <base href="/tager2/">
 
@@ -32,30 +32,204 @@
 
   <title>تاجر ٢ – إدارة المحل محليًا</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #172b4d;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-width: 0;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: #f4f7fb;
+    }
+
+    #startup-splash {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      box-sizing: border-box;
+      padding: 20px;
+      background: radial-gradient(ellipse at 50% 42%, #ffffff 0%, #f4f7fb 76%);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+
+    #startup-splash.startup-splash--hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .startup-card {
+      width: min(100%, 390px);
+      box-sizing: border-box;
+      padding: clamp(26px, 7vw, 40px) 24px 30px;
+      border: 1px solid #e6ebf2;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 18px 55px rgba(33, 61, 103, 0.09);
+      text-align: center;
+    }
+
+    .startup-logo {
+      display: block;
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 14px;
+      object-fit: contain;
+    }
+
+    .startup-brand {
+      margin: 0;
+      color: #173f7a;
+      font-size: 22px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
+    }
+
+    .startup-message {
+      margin: 22px 0 18px;
+      color: #344765;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.65;
+    }
+
+    .startup-progress {
+      position: relative;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eef7;
+      direction: ltr;
+    }
+
+    .startup-progress__fill {
+      position: absolute;
+      top: 0;
+      left: -42%;
+      width: 40%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2e74d0, #16a6a1);
+      animation: startup-progress-slide 1.15s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    .startup-hint {
+      display: block;
+      margin-top: 13px;
+      color: #78869a;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @keyframes startup-progress-slide {
+      from { transform: translateX(0); }
+      to { transform: translateX(355%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #startup-splash {
+        transition: none;
+      }
+
+      .startup-progress__fill {
+        left: 30%;
+        width: 40%;
+        animation: none;
+      }
+    }
+  </style>
 </head>
 <body>
-  <script src="tesseract/tesseract.min.js"></script>
+  <div id="startup-splash" role="status" aria-live="polite" aria-busy="true">
+    <div class="startup-card">
+      <img class="startup-logo" src="assets/assets/images/tager_logo_ui.png" width="78" height="78" alt="شعار تاجر ٢">
+      <p class="startup-brand">تاجر ٢</p>
+      <p id="startup-message" class="startup-message">جارٍ تحميل التطبيق، يرجى الانتظار</p>
+      <div id="startup-progress" class="startup-progress" role="progressbar" aria-label="جارٍ التحميل">
+        <span class="startup-progress__fill" aria-hidden="true"></span>
+      </div>
+      <span id="startup-hint" class="startup-hint">قد يستغرق ذلك بضع لحظات</span>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var splash = document.getElementById('startup-splash');
+      var isEnglish = /^en(?:-|$)/i.test(navigator.language || '');
+      var message = document.getElementById('startup-message');
+      var hint = document.getElementById('startup-hint');
+      var progress = document.getElementById('startup-progress');
+
+      if (isEnglish) {
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+        document.querySelector('.startup-logo').alt = 'Tager 2 logo';
+        message.textContent = 'Loading the app, please wait';
+        hint.textContent = 'This may take a few moments';
+        progress.setAttribute('aria-label', 'Loading');
+      }
+
+      window.addEventListener('flutter-first-frame', function () {
+        if (!splash || splash.dataset.dismissed === 'true') return;
+        splash.dataset.dismissed = 'true';
+        splash.setAttribute('aria-hidden', 'true');
+        splash.classList.add('startup-splash--hidden');
+        window.setTimeout(function () { splash.remove(); }, 300);
+      }, { once: true });
+    })();
+  </script>
+  <!--
+    This small bridge exposes OCR entry points; Tesseract, PDF.js and PaddleOCR
+    are imported only if the corresponding local OCR function is actually used.
+    Barcode decoding remains on the browser's native BarcodeDetector path.
+  -->
   <script src="tager2_ocr.js"></script>
-  <script type="module" src="tager2_pdf_ocr.mjs"></script>
-  <script type="module" src="paddleocr/tager2_paddle_ocr.mjs"></script>
-  <script id="mobile-scanner-zxing-wasm" src="zxing-wasm/index.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('tager2-service-worker.js').catch(function (error) {
-          console.warn('تعذر تفعيل العمل دون اتصال:', error);
-        });
+        // Let the first frame and its essential resources win the network before
+        // the offline cache is initialized in the background.
+        window.setTimeout(function () {
+          navigator.serviceWorker.register('tager2-service-worker.js')
+            .then(async function () {
+              const registration = await navigator.serviceWorker.ready;
+              const worker = registration.active;
+              if (!worker) return;
+
+              const scope = new URL(registration.scope);
+              const urls = performance.getEntriesByType('resource')
+                .map(function (entry) { return entry.name; })
+                .filter(function (value) {
+                  try {
+                    const url = new URL(value);
+                    return url.origin === scope.origin &&
+                      url.pathname.startsWith(scope.pathname);
+                  } catch (_) {
+                    return false;
+                  }
+                });
+              worker.postMessage({ type: 'cache-startup-resources', urls: urls });
+            })
+            .catch(function (error) {
+              console.warn('تعذر تفعيل العمل دون اتصال:', error);
+            });
+        }, 1200);
       });
     }
   </script>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -156718,7 +156718,7 @@ k.hN(A.lj(null,null,null,null,null,B.T,null,A.b4(n.ane(m,""+B.f.aT(l,100)+"."+B.
 case 1:return A.p(q,r)}})
 return A.q($async$xp,r)},
 b0_(a,b){return this.ad5(a,b)},
-I(b7){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,b0,b1,b2,b3=this,b4=null,b5="assets/images/tager_logo.png",b6=A.bc(b7,B.bP,t.wr)
+I(b7){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,b0,b1,b2,b3=this,b4=null,b5="assets/images/tager_logo_ui.png",b6=A.bc(b7,B.bP,t.wr)
 b6.toString
 s=b6.ga0H()
 r=b6.gnJ()

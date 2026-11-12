@@ -4,7 +4,7 @@ const pdfjsBase = new URL('./pdfjs/', import.meta.url);
 const tesseractBase = new URL('tesseract/', document.baseURI);
 GlobalWorkerOptions.workerSrc = new URL('pdf.worker.mjs', pdfjsBase).href;
 
-window._extractPdfText = async function (pdfBase64, request = {}) {
+export async function extractPdfText(pdfBase64, request = {}) {
   let pdfDocument;
   let tesseractWorker;
 
@@ -30,7 +30,7 @@ window._extractPdfText = async function (pdfBase64, request = {}) {
     const language = request.language || 'ara+eng';
     const ocrArgs = request.args || {};
 
-    tesseractWorker = await Tesseract.createWorker({
+    tesseractWorker = await window.Tesseract.createWorker({
       workerPath: new URL('worker.min.js', tesseractBase).href,
       corePath: new URL('tesseract-core.wasm.js', tesseractBase).href,
       langPath: new URL('tessdata/', tesseractBase).href,
@@ -77,4 +77,4 @@ window._extractPdfText = async function (pdfBase64, request = {}) {
     if (tesseractWorker) await tesseractWorker.terminate();
     if (pdfDocument) await pdfDocument.destroy();
   }
-};
+}
